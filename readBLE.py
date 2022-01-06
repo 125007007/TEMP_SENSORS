@@ -10,13 +10,12 @@ dev_id = 0
 toggle_device(dev_id, True)
 sensor1_db = 'sensor1Data.db'
 sensor2_db = 'sensor2Data.db'
-sampleFreq = 600 # time in seconds ==> Sample every 10 min
+sampleFreq = 150 # time in seconds ==> Sample every 10 min
 name = None
 temp = None
 hum = None
 last = None
 cache = [None, None]
-last_name = None
 print(time.time())
 try:
     sock = bluez.hci_open_dev(dev_id)
@@ -28,7 +27,7 @@ except:
 enable_le_scan(sock, filter_duplicates=False)
 
 def temp_1_handler(mac, adv_type, data, rssi):
-	global dbname, sampleFreq, name, temp, hum, last_name
+	global dbname, sampleFreq, name, temp, hum
 	data_str = raw_packet_to_str(data)
 	# Check for ATC preamble
 	if data_str[6:10] == '1a18':
@@ -40,15 +39,15 @@ def temp_1_handler(mac, adv_type, data, rssi):
 			getData_1()
 
 def temp_2_handler(mac, adv_type, data, rssi):
-	global dbname, sampleFreq, name, temp, hum, last_name
+	global dbname, sampleFreq, name2, temp2, hum2
 	data_str = raw_packet_to_str(data)
 	# Check for ATC preamble
 	if data_str[6:10] == '1a18':
-		temp = int(data_str[22:26], 16) / 10
-		hum = int(data_str[26:28], 16)
-		batt = int(data_str[28:30], 16)
+		temp2 = int(data_str[22:26], 16) / 10
+		hum2 = int(data_str[26:28], 16)
+		batt2 = int(data_str[28:30], 16)
 		if mac == "A4:C1:38:A4:8C:2C":
-			name = "Under Portacom"
+			name2 = "Under Portacom"
 			getData_2()
 
 def getData_1():
@@ -65,14 +64,14 @@ def getData_1():
 	time.sleep(sampleFreq)
 	
 def getData_2():
-	global name, temp, hum
+	global name2, temp2, hum2
 	# Called on new LE packet
 	print(datetime.now(), "Device: Under Portacom - Saving into {}".format(sensor2_db))
 	conn=sqlite3.connect(sensor2_db)
 	curs=conn.cursor()
 	timestamp = datetime.now()
 	rounded_down_datetime = timestamp.replace(microsecond=0)
-	curs.execute("INSERT INTO DHT_data values((?), (?), (?), (?))", (name, rounded_down_datetime, temp, hum))
+	curs.execute("INSERT INTO DHT_data values((?), (?), (?), (?))", (name2, rounded_down_datetime, temp2, hum2))
 	conn.commit()
 	conn.close()
 	time.sleep(sampleFreq)

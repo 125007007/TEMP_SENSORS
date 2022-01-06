@@ -42,6 +42,12 @@ def maxRowsTable():
 	conn.close()
 	return maxNumberRows
 
+# define and initialize global variables
+global numSamples
+numSamples = maxRowsTable()
+if (numSamples > 145):
+        numSamples = 100
+
 # Get 'x' samples of historical data
 def getHistData (numSamples):
 	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
@@ -90,11 +96,6 @@ def getHistData2(numSamples):
 	conn.close()
 	return names, dates, temps, hums
 
-# define and initialize global variables
-global numSamples
-numSamples = maxRowsTable()
-if (numSamples > 145):
-        numSamples = 144
 
 global rangeTime
 rangeTime = 100
@@ -112,6 +113,21 @@ def sensor1():
 	templateData = {'name':name, 'time':time, 'temp':temp, 'hum':hum}
 
 	return render_template('sensor1.html', **templateData)
+
+@app.route("/sensor1v2")
+def sensor1v2():
+	name, time, temp, hum = getHistData(numSamples)
+	name_last, time_last, temp_last, hum_last = getLastData()
+	templateData = {'name':name,
+					'time':time,
+					'temp':temp,
+					'hum':hum,
+					'name_last':name_last,
+					'time_last':time_last,
+					'temp_last':temp_last,
+					'hum_last':hum_last}
+
+	return render_template('sensor1v2.html', **templateData)
 	
 @app.route("/sensor2")
 def sensor2():
@@ -119,6 +135,21 @@ def sensor2():
 	templateData = {'name':name, 'time':time, 'temp':temp, 'hum':hum}
 
 	return render_template('sensor2.html', **templateData)
+
+@app.route("/sensor2v2")
+def sensor2v2():
+	name, time, temp, hum = getHistData2(numSamples)
+	name_last, time_last, temp_last, hum_last = getLastData2()
+	templateData = {'name':name,
+					'time':time,
+					'temp':temp,
+					'hum':hum,
+					'name_last':name_last,
+					'time_last':time_last,
+					'temp_last':temp_last,
+					'hum_last':hum_last}
+
+	return render_template('sensor2v2.html', **templateData)
 
 @app.route('/sensor1/plot/hum')
 def plot_hum():
