@@ -11,7 +11,7 @@
 '''
 
 from datetime import datetime
-from gpiozero import CPUTemerature
+from gpiozero import CPUTemperature
 import os, sqlite3, io
 from flask import Flask, render_template, send_file, make_response, request, Response
 
@@ -103,7 +103,7 @@ rangeTime = 100
 @app.route("/")
 def index():
 
-	templateData = {'CPU_temp': CPUTemerature().temperature}
+	templateData = {'CPU_temp': CPUTemperature().temperature}
 
 	return render_template('index.html', **templateData)
 
