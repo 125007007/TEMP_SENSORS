@@ -11,9 +11,6 @@
 '''
 
 from datetime import datetime
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
 import os, sqlite3, io
 from flask import Flask, render_template, send_file, make_response, request, Response
 
@@ -105,16 +102,8 @@ rangeTime = 100
 @app.route("/")
 def index():
 	return render_template('index.html')
-	
 
 @app.route("/sensor1")
-def sensor1():
-	name, time, temp, hum = getLastData()
-	templateData = {'name':name, 'time':time, 'temp':temp, 'hum':hum}
-
-	return render_template('sensor1.html', **templateData)
-
-@app.route("/sensor1v2")
 def sensor1v2():
 	name, time, temp, hum = getHistData(numSamples)
 	name_last, time_last, temp_last, hum_last = getLastData()
@@ -127,16 +116,9 @@ def sensor1v2():
 					'temp_last':temp_last,
 					'hum_last':hum_last}
 
-	return render_template('sensor1v2.html', **templateData)
-	
+	return render_template('sensor1.html', **templateData)
+
 @app.route("/sensor2")
-def sensor2():
-	name, time, temp, hum = getLastData2()
-	templateData = {'name':name, 'time':time, 'temp':temp, 'hum':hum}
-
-	return render_template('sensor2.html', **templateData)
-
-@app.route("/sensor2v2")
 def sensor2v2():
 	name, time, temp, hum = getHistData2(numSamples)
 	name_last, time_last, temp_last, hum_last = getLastData2()
@@ -149,63 +131,8 @@ def sensor2v2():
 					'temp_last':temp_last,
 					'hum_last':hum_last}
 
-	return render_template('sensor2v2.html', **templateData)
+	return render_template('sensor2.html', **templateData)
 
-@app.route('/sensor1/plot/hum')
-def plot_hum():
-	name, times, temps, hums = getHistData(numSamples)
-	ys = hums
-	xs = range(numSamples)
-	fig = Figure()
-	axis = fig.add_subplot(1, 1, 1)
-	axis.set_ylabel('Humidity')
-	axis.set_xlabel('Samples')
-	axis.plot(xs, ys)
-	output = io.BytesIO()
-	FigureCanvas(fig).print_png(output)
-	return Response(output.getvalue(), mimetype='image/png')
-
-@app.route('/sensor1/plot/temp')
-def plot_temp():
-	name, times, temps, hums = getHistData(numSamples)
-	ys = temps
-	xs = range(numSamples)
-	fig = Figure()
-	axis = fig.add_subplot(1, 1, 1)
-	axis.set_ylabel('Temperature')
-	axis.set_xlabel('Samples')
-	axis.plot(xs, ys)
-	output = io.BytesIO()
-	FigureCanvas(fig).print_png(output)
-	return Response(output.getvalue(), mimetype='image/png')
-
-@app.route('/sensor2/plot/hum')
-def plot_hum2():
-	name, times, temps, hums = getHistData2(numSamples)
-	ys = hums
-	xs = range(numSamples)
-	fig = Figure()
-	axis = fig.add_subplot(1, 1, 1)
-	axis.set_ylabel('Humidity')
-	axis.set_xlabel('Samples')
-	axis.plot(xs, ys)
-	output = io.BytesIO()
-	FigureCanvas(fig).print_png(output)
-	return Response(output.getvalue(), mimetype='image/png')
-
-@app.route('/sensor2/plot/temp')
-def plot_temp2():
-	name, times, temps, hums = getHistData2(numSamples)
-	ys = temps
-	xs = range(numSamples)
-	fig = Figure()
-	axis = fig.add_subplot(1, 1, 1)
-	axis.set_ylabel('Temperature')
-	axis.set_xlabel('Samples')
-	axis.plot(xs, ys)
-	output = io.BytesIO()
-	FigureCanvas(fig).print_png(output)
-	return Response(output.getvalue(), mimetype='image/png')
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=80, debug=True)
