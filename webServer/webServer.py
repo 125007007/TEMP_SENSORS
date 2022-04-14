@@ -94,12 +94,29 @@ def getHistData2(numSamples):
 	conn.close()
 	return names, dates, temps, hums
 
+def getCurrentDayData1():
+	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
+	curs = conn.cursor()
+	curs.execute("SELECT * FROM coupons WHERE date(annotated, 'unixepoch') = " + str(datetime.today().strftime('%Y-%m-%d')))
+	data = curs.fetchall()
+	names = []
+	dates = []
+	temps = []
+	hums = []
+	for row in reversed(data):
+		names.append(row[0])
+		dates.append(row[1])
+		temps.append(row[2])
+		hums.append(row[3])
+	conn.close()
+	return names, dates, temps, hums
+
 
 global rangeTime
 rangeTime = 100
 
 
-# main route 
+#main route 
 @app.route("/")
 def index():
 
@@ -108,7 +125,7 @@ def index():
 	return render_template('index.html', **templateData)
 
 @app.route("/sensor1")
-def sensor1v2():
+def sensor1():
 	name, time, temp, hum = getHistData(numSamples)
 	name_last, time_last, temp_last, hum_last = getLastData()
 	templateData = {'name':name,
@@ -122,8 +139,23 @@ def sensor1v2():
 
 	return render_template('sensor1.html', **templateData)
 
+@app.route("/sensor1/dayTemp")
+def sensor1_dayTemp():
+	name, time, temp, hum = getCurrentDayData1()
+	name_last, time_last, temp_last, hum_last = getLastData()
+	templateData = {'name':name,
+					'time':time,
+					'temp':temp,
+					'hum':hum,
+					'name_last':name_last,
+					'time_last':time_last,
+					'temp_last':temp_last,
+					'hum_last':hum_last}
+
+	return render_template('sensor1_day.html', **templateData)
+
 @app.route("/sensor2")
-def sensor2v2():
+def sensor2():
 	name, time, temp, hum = getHistData2(numSamples)
 	name_last, time_last, temp_last, hum_last = getLastData2()
 	templateData = {'name':name,
