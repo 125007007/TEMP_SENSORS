@@ -33,8 +33,6 @@
 	  </div>
 	</nav>
 	<h1>{{ name_last }} Sensor Data </h1>
-    <div id="g1"></div>
-    <div id="g2"></div>
 	<div class="d-flex justify-content-center">
 		<p class="p-3 mb-2 bg-secondary text-white">Last Reading: {{ time_last }} (Updated every 1 minute)</p>
 	</div>
@@ -43,7 +41,6 @@
 	</div>
     <div class="d-flex justify-content-around">
         <canvas id="tempChart" width="950" height="380"></canvas>
-        <canvas id="humChart" width="950" height="380"></canvas>
     </div>
 
     <script>

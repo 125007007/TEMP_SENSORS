@@ -97,7 +97,7 @@ def getHistData2(numSamples):
 def getCurrentDayData1():
 	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
 	curs = conn.cursor()
-	curs.execute("SELECT * FROM coupons WHERE date(annotated, 'unixepoch') = " + str(datetime.today().strftime('%Y-%m-%d')))
+	curs.execute("SELECT * FROM DHT_data WHERE date(timestamp, 'unixepoch') = " + str(datetime.today().strftime('%Y-%m-%d')))
 	data = curs.fetchall()
 	names = []
 	dates = []
