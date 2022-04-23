@@ -54,11 +54,13 @@ def getData_1():
 	global name, temp, hum
 	# Called on new LE packet
 	print(datetime.now(), "Device: In Portacom - Saving into {}".format(sensor1_db))
+	now = datetime.now()
+	current_time = now.strftime("%H:%M:%S")
+	current_date = now.strftime('%Y-%m-%d')
 	conn=sqlite3.connect(sensor1_db)
 	curs=conn.cursor()
 	timestamp = datetime.now()
-	rounded_down_datetime = timestamp.replace(microsecond=0)
-	curs.execute("INSERT INTO DHT_data values((?), (?), (?), (?))", (name, rounded_down_datetime, temp, hum)) 
+	curs.execute("INSERT INTO DHT_data values((?), (?), (?), (?), (?), (?))", (name, temp, hum, current_time, current_date)) 
 	conn.commit()
 	conn.close()
 	time.sleep(sampleFreq)
@@ -67,11 +69,13 @@ def getData_2():
 	global name2, temp2, hum2
 	# Called on new LE packet
 	print(datetime.now(), "Device: Under Portacom - Saving into {}".format(sensor2_db))
+	now = datetime.now()
+	current_time = now.strftime("%H:%M:%S")
+	current_date = now.strftime('%Y-%m-%d')
 	conn=sqlite3.connect(sensor2_db)
 	curs=conn.cursor()
 	timestamp = datetime.now()
-	rounded_down_datetime = timestamp.replace(microsecond=0)
-	curs.execute("INSERT INTO DHT_data values((?), (?), (?), (?))", (name2, rounded_down_datetime, temp2, hum2))
+	curs.execute("INSERT INTO DHT_data values((?), (?), (?), (?), (?), (?))", (name, temp, hum, current_time, current_date)) 
 	conn.commit()
 	conn.close()
 	time.sleep(sampleFreq)
