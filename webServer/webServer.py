@@ -23,7 +23,7 @@ app = Flask(__name__)
 def getLastData():
 	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
 	curs = conn.cursor()
-	for row in curs.execute("SELECT * FROM DHT_data ORDER BY data DESC LIMIT 1"):
+	for row in curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT 1"):
 		name = str(row[0])
 		temp = row[1]
 		hum = row[2]
@@ -52,7 +52,7 @@ if (numSamples > 145):
 def getHistData (numSamples):
 	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
 	curs = conn.cursor()
-	curs.execute("SELECT * FROM DHT_data ORDER BY data DESC LIMIT "+str(numSamples))
+	curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT "+str(numSamples))
 	data = curs.fetchall()
 	names = []
 	temps = []
@@ -73,7 +73,7 @@ def getHistData (numSamples):
 def getLastData2():
 	conn = sqlite3.connect('../sensor2Data.db', check_same_thread=False)
 	curs = conn.cursor()
-	for row in curs.execute("SELECT * FROM DHT_data ORDER BY data DESC LIMIT 1"):
+	for row in curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT 1"):
 		name = str(row[0])
 		temp = row[1]
 		hum = row[2]
