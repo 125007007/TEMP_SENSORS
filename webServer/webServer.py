@@ -12,7 +12,7 @@
 
 from datetime import datetime
 from gpiozero import CPUTemperature
-import os, sqlite3, io
+import sqlite3, time, threading
 from flask import Flask, render_template, send_file, make_response, request, Response
 
 
@@ -127,6 +127,23 @@ global rangeTime
 rangeTime = 100
 
 
+
+def cpuTempLog():
+
+	while True:
+
+		temp = CPUTemperature().temperature
+		now = datetime.now()
+		current_time = now.strftime("%H:%M:%S")
+		current_date = now.strftime('%Y-%m-%d')
+		rounded_timestamp = now.replace(microsecond=0)
+		conn=sqlite3.connect('../serverCPU.db')
+		curs=conn.cursor()
+		curs.execute("INSERT INTO CPU_temps values((?), (?), (?), (?))", (temp, current_date, current_time, rounded_timestamp)) 
+		conn.commit()
+		conn.close()
+		time.sleep(300)
+
 #main route 
 @app.route("/")
 def index():
@@ -188,4 +205,6 @@ def sensor2():
 
 
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port=80, debug=True)
+	t1 = threading.Thread(target=cpuTempLog)
+	t1.start()
+	app.run(host='0.0.0.0', port=80, debug=True)

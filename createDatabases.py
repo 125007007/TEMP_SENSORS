@@ -16,6 +16,7 @@ def create_connection(db_file):
 
 
 if __name__ == '__main__':
+    create_connection('serverCPU.db')
     create_connection('sensor1Data.db')
     create_connection('sensor2Data.db')
     time.sleep(0.5)
