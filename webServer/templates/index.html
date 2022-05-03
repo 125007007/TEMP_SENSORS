@@ -31,13 +31,86 @@
 	    </div>
 	  </div>
 	</nav>
+
+	<h1>{{ name_last }} Sensor Data </h1>
+    <div id="g1"></div>
+    <div id="g2"></div>
+	<div class="d-flex justify-content-center">
+		<p class="p-3 mb-2 bg-secondary text-white">Last Reading: {{ date_last }} {{ time_last }}(Updated every 1 minute)</p>
+	</div>
+	<div class="d-flex justify-content-center">
+		<a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1">Refresh</a>
+	</div>
+    <div class="d-flex justify-content-around">
+        <canvas id="tempChart" width="950" height="380"></canvas>
+    </div>
+
+    <script>
+		// Global parameters:
+		// do not resize the chart canvas when its container does (keep at 600x400px)
+		Chart.defaults.global.responsive = false;
+  
+		// define the chart data
+		var chartData = {
+		  labels : [{% for item in time %}
+					 "{{item}}",
+					{% endfor %}],
+		  datasets : [{
+			  label: 'Temperature',
+			  fill: true,
+			  lineTension: 0.1,
+			  backgroundColor: "rgba(75,192,192,0.2)",
+			  borderColor: "rgba(75,192,192,1)",
+			  borderCapStyle: 'butt',
+			  borderDash: [],
+			  borderDashOffset: 0.0,
+			  borderJoinStyle: 'miter',
+			  pointBorderColor: "rgba(75,192,192,1)",
+			  pointBackgroundColor: "#fff",
+			  pointBorderWidth: 1,
+			  pointHoverRadius: 5,
+			  pointHoverBackgroundColor: "rgba(75,192,192,1)",
+			  pointHoverBorderColor: "rgba(220,220,220,1)",
+			  pointHoverBorderWidth: 2,
+			  pointRadius: 1,
+			  pointHitRadius: 10,
+			  data : [{% for item in temp %}
+						{{item}},
+					  {% endfor %}],
+			  spanGaps: false
+		  }]
+		}
+  
+		// get chart canvas
+		var holder = document.getElementById("tempChart");
+		var ctx = document.getElementById("tempChart").getContext("2d");
+  
+		// create the chart using the chart canvas
+		var tempChart = new Chart(ctx, {
+		  type: 'line',
+		  data: chartData,
+		  options: {
+			tooltips: {
+			  enabled: true,
+			  mode: 'single',
+			  callbacks: {
+				label: function(tooltipItems, data) {
+						 return tooltipItems.yLabel + ' degrees';
+					   }
+			  }
+			},
+		  }
+		});
+	  
+	  </script>
+
     <div id="g1"></div>
 	<script>
 		var g1;
 		document.addEventListener("DOMContentLoaded", function(event) {
 			g1 = new JustGage({
 				id: "g1",
-				value: {{CPU_temp}},
+				value: {{CPU_temp_now}},
 				valueFontColor: "white",
 				titleFontColor: "white",
 				min: 0,

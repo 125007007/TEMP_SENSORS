@@ -144,11 +144,36 @@ def cpuTempLog():
 		conn.close()
 		time.sleep(300)
 
+def getHistDataCPU(numSamples):
+	conn = sqlite3.connect('../serverCPU.db', check_same_thread=False)
+	curs = conn.cursor()
+	curs.execute("SELECT * FROM CPU_temps ORDER BY date DESC LIMIT "+str(numSamples))
+	data = curs.fetchall()
+	temps = []
+	dates = []
+	times = []
+	timestamps = []
+
+	for row in reversed(data):
+		temps.append(row[0])
+		dates.append(row[1])
+		times.append(row[2])
+		timestamps.append(row[3])
+
+	conn.close()
+	return temps, dates, times, timestamps
+
 #main route 
 @app.route("/")
 def index():
 
-	templateData = {'CPU_temp': CPUTemperature().temperature}
+	temps, dates, times, timestamps = getHistDataCPU(numSamples)
+
+	templateData = {'temps':temps,
+					'dates':dates,
+					'times':times,
+					'timestamps':timestamps,
+					'CPU_temp_now': CPUTemperature().temperature}
 
 	return render_template('index.html', **templateData)
 
