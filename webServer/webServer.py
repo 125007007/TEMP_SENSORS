@@ -196,6 +196,7 @@ def sensor1():
 
 @app.route("/sensor1/dayTemp")
 def sensor1_dayTemp():
+	
 	name, temp, hum, date, time = getCurrentDayData1()
 	name_last, temp_last, hum_last, date_last, time_last = getLastData()
 	templateData = {'name':name,
