@@ -49,7 +49,7 @@ if (numSamples > 145):
         numSamples = 100
 
 # Get 'x' samples of historical data
-def getHistData (numSamples):
+def getHistData(numSamples):
 	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
 	curs = conn.cursor()
 	curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT "+str(numSamples))
