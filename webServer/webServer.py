@@ -159,13 +159,13 @@ def index():
 
 @app.route("/sensor1")
 def sensor1():
-	names, temps, hums, dates, times = getHistData(numSamples)
+	name, temp, hum, date, time = getHistData(numSamples)
 	name_last, temp_last, hum_last, date_last, time_last, = getLastData()
-	templateData = {'name':names,
-					'temp':temps,
-					'hum':hums,
-					'date':dates,
-					'time':times,
+	templateData = {'name':name,
+					'temp':temp,
+					'hum':hum,
+					'date':date,
+					'time':time,
 					'name_last':name_last,
 					'temp_last':temp_last,
 					'hum_last':hum_last,
