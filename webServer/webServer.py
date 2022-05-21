@@ -103,26 +103,6 @@ def getHistData2(numSamples):
 	conn.close()
 	return names, temps, hums, dates, times
 
-def getCurrentDayData1():
-	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
-	curs = conn.cursor()
-	curs.execute("SELECT * FROM DHT_data WHERE date(date, 'unixepoch') = " + str(datetime.today().strftime('%Y-%m-%d')))
-	data = curs.fetchall()
-	names = []
-	temps = []
-	hums = []
-	dates = []
-	times = []
-	for row in reversed(data):
-		names.append(row[0])
-		temps.append(row[1])
-		hums.append(row[2])
-		dates.append(row[3])
-		times.append(row[4])
-	conn.close()
-	return names, temps, hums, dates, times
-
-
 global rangeTime
 rangeTime = 100
 
@@ -179,13 +159,13 @@ def index():
 
 @app.route("/sensor1")
 def sensor1():
-	name, temp, hum, date, time = getHistData(numSamples)
+	names, temps, hums, dates, times = getHistData(numSamples)
 	name_last, temp_last, hum_last, date_last, time_last, = getLastData()
-	templateData = {'name':name,
-					'temp':temp,
-					'hum':hum,
-					'date':date,
-					'time':time,
+	templateData = {'name':names,
+					'temp':temps,
+					'hum':hums,
+					'date':dates,
+					'time':times,
 					'name_last':name_last,
 					'temp_last':temp_last,
 					'hum_last':hum_last,
