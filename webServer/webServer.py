@@ -149,9 +149,9 @@ def index():
 
 	temps, dates, times, timestamps = getHistDataCPU(numSamples)
 
-	templateData = {'temps':temps,
-					'dates':dates,
-					'times':times,
+	templateData = {'temp':temps,
+					'date':dates,
+					'time':times,
 					'timestamps':timestamps,
 					'CPU_temp_now': CPUTemperature().temperature}
 
