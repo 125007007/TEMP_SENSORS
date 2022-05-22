@@ -127,7 +127,7 @@ def cpuTempLog():
 def getHistDataCPU(numSamples):
 	conn = sqlite3.connect('../serverCPU.db', check_same_thread=False)
 	curs = conn.cursor()
-	curs.execute("SELECT * FROM CPU_temps ORDER BY date DESC LIMIT "+str(numSamples))
+	curs.execute("SELECT * FROM CPU_temps ORDER BY date DESC")
 	data = curs.fetchall()
 	temps = []
 	dates = []
