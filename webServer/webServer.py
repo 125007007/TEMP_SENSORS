@@ -112,7 +112,7 @@ def cpuTempLog():
 
 	while True:
 
-		temp = CPUTemperature().temperature
+		temp = round(CPUTemperature().temperature, 1)
 		now = datetime.now()
 		current_time = now.strftime("%H:%M:%S")
 		current_date = now.strftime('%Y-%m-%d')

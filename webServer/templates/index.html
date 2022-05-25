@@ -52,7 +52,7 @@
   
 		// define the chart data
 		var chartData = {
-		  labels : [{% for item in time %}
+		  labels : [{% for item in timestamps %}
 					 "{{item}}",
 					{% endfor %}],
 		  datasets : [{
