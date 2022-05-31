@@ -143,6 +143,25 @@ def getHistDataCPU(numSamples):
 	conn.close()
 	return temps, dates, times, timestamps
 
+def getDayCPU(selectDate):
+	conn = sqlite3.connect('../serverCPU.db', check_same_thread=False)
+	curs = conn.cursor()
+	curs.execute("SELECT * FROM CPU_temps WHERE date = '{}'".format(selectDate))
+	data = curs.fetchall()
+	temps = []
+	dates = []
+	times = []
+	timestamps = []
+
+	for row in reversed(data):
+		temps.append(row[0])
+		dates.append(row[1])
+		times.append(row[2])
+		timestamps.append(row[3])
+
+	conn.close()
+	return temps, dates, times, timestamps
+
 #main route 
 @app.route("/")
 def index():
@@ -174,21 +193,15 @@ def sensor1():
 
 	return render_template('sensor1.html', **templateData)
 
-@app.route("/sensor1/dayTemp")
+@app.route("/Sday")
 def sensor1_dayTemp():
 	
-	name, temp, hum, date, time = getCurrentDayData1()
-	name_last, temp_last, hum_last, date_last, time_last = getLastData()
-	templateData = {'name':name,
-					'temp':temp,
-					'hum':hum,
-					'date':date,
-					'time':time,
-					'name_last':name_last,
-					'temp_last':temp_last,
-					'hum_last':hum_last,
-					'date_last':date_last,
-					'time_last':time_last}
+	temps, dates, times, timestamps = getDayCPU(str(datetime.today().strftime('%Y-%m-%d')))
+
+	templateData = {'temp':temps,
+					'date':dates,
+					'time':times,
+					'timestamps':timestamps}
 
 	return render_template('sensor1_day.html', **templateData)
 
