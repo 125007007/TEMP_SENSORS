@@ -177,7 +177,7 @@ def index():
 	if request.method == 'POST':
 		selectedDate = request.form.get("Sdate")
 
-		temps, dates, times, timestamps = getDayCPU(str(datetime.today().strftime('%Y-%m-%d')))
+		temps, dates, times, timestamps = getDayCPU(str(selectedDate))
 
 		templateData = {'temp':temps,
 						'date':dates,

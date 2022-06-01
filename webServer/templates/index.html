@@ -40,13 +40,27 @@
 	</div>
 	<div class="d-flex justify-content-center">
 		<a class="btn btn-secondary btn-lg active m-3" role="button"href="/">Refresh</a>
-		
-		<form action="{{ url_for("index")}}" method="post">
-		<label for="Sdate">Enter Date</label>
-		<input type="text" id="Sdate" name="Sdate" placeholder="date">
-		<button class="btn btn-secondary btn-lg active m-3 type="submit">Load</button>
 		<a class="btn btn-secondary btn-lg active m-3" role="button"href="/Sday">Entire Day</a>
 	</div>
+
+
+	<form action="{{ url_for("index")}}" method="post">
+		<div class="row g-3 align-items-center">
+			<div class="col-auto">
+			  <label for="Sdate" class="col-form-label">Enter Date</label>
+			</div>
+			<div class="col-auto">
+			  <input type="password" id="Sdate" class="form-control">
+			</div>
+			<div class="col-auto">
+			  <span class="form-text">
+				Date should be in YYYY-MM-DD format.
+			  </span>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
     <div class="d-flex justify-content-around">
         <canvas id="tempChart" width="1800" height="500"></canvas>
     </div>
