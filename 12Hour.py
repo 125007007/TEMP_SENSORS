@@ -10,5 +10,5 @@ conn = sqlite3.connect(sys.argv[1])
 curs = conn.cursor()
 tdate = str(datetime.today().strftime('%Y-%m-%d'))
 print ("\nEntire database contents:\n")
-for row in curs.execute("SELECT * FROM CPU_temps WHERE timestamp >= datetime('now', '- 12 hours')"):
+for row in curs.execute("SELECT * FROM CPU_temps WHERE timestamp >= datetime('now', '-12 hours')"):
     print(row)
