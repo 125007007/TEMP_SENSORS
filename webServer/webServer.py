@@ -177,6 +177,7 @@ def index():
 
 	if request.method == 'POST':
 		selectedDate = request.form.get("Sdate")
+		print
 
 		temps, dates, times, timestamps = getDayCPU(str(selectedDate))
 
