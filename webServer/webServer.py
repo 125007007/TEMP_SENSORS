@@ -163,7 +163,7 @@ def getDayCPU(selectDate):
 	return temps, dates, times, timestamps
 
 #main route 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
 
 	temps, dates, times, timestamps = getHistDataCPU(numSamples)
@@ -173,6 +173,18 @@ def index():
 					'time':times,
 					'timestamps':timestamps,
 					'CPU_temp_now': CPUTemperature().temperature}
+
+	if request.method == 'POST':
+		selectedDate = request.form.get("Sdate")
+
+		temps, dates, times, timestamps = getDayCPU(str(datetime.today().strftime('%Y-%m-%d')))
+
+		templateData = {'temp':temps,
+						'date':dates,
+						'time':times,
+						'timestamps':timestamps}
+
+		return render_template('sensor1_day.html', **templateData)
 
 	return render_template('index.html', **templateData)
 
