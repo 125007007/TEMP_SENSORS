@@ -128,7 +128,7 @@ def getHistDataCPU(numSamples):
 	conn = sqlite3.connect('../serverCPU.db', check_same_thread=False)
 	curs = conn.cursor()
 	#curs.execute("SELECT * FROM CPU_temps ORDER BY date ASC")
-	curs.execute("SELECT * FROM CPU_temps WHERE timestamp >= datetime('now', '-12 hours')")
+	curs.execute("SELECT * FROM CPU_temps WHERE timestamp >= datetime('now', '-1 hours')")
 	data = curs.fetchall()
 	temps = []
 	dates = []
