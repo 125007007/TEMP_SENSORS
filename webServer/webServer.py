@@ -207,7 +207,7 @@ def sensor1():
 
 	return render_template('sensor1.html', **templateData)
 
-@app.route("/Sday")
+@app.route("/Fullday")
 def sensor1_dayTemp():
 	
 	temps, dates, times, timestamps = getDayCPU(str(datetime.today().strftime('%Y-%m-%d')))
@@ -217,7 +217,7 @@ def sensor1_dayTemp():
 					'time':times,
 					'timestamps':timestamps}
 
-	return render_template('sensor1_day.html', **templateData)
+	return render_template('fullDay.html', **templateData)
 
 @app.route("/sensor2")
 def sensor2():
