@@ -186,7 +186,7 @@ def index():
 						'time':times,
 						'timestamps':timestamps}
 
-		return render_template('sensor1_day.html', **templateData)
+		return render_template('fullDay.html', **templateData)
 
 	return render_template('index.html', **templateData)
 

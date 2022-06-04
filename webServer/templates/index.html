@@ -10,25 +10,22 @@
 		<div id="g1"></div>
 		<div class="d-flex justify-content-around">
 
-			<form action="{{ url_for('index')}}" method="post" class="form-inline">
-				<div class="row g-3 align-items-center">
-					<div class="col-auto">
-						<label for="Sdate" class="col-form-label text-white">Enter Date</label>
-						<input type="text" id="Sdate" name="Sdate" class="form-control">
-					</div>
-
-					<div class="d-flex justify-content-center m-0 p-0">
-						<span class="form-text">
-						Date should be in YYYY-MM-DD format.
-						</span>
-					</div>
+			<form class="form-inline" action="{{ url_for('index')}}" method="post">
+				<div class="form-group">
+				  <label for="Sdate">Password</label>
+				  <input type="password" id="Sdate" class="form-control mx-sm-3">
+				  <small class="text-muted">
+					Date should be in YYYY-MM-DD format.
+				  </small>
 				</div>
-
 				<button type="submit" class="btn btn-secondary active m-3">Load</button>
-
 			</form>
+
 		</div>
 	</div>
+
+	
+
 
 	<div class="d-flex justify-content-center">
 		<a class="btn btn-secondary btn-lg active m-3" role="button"href="/">Refresh</a>
