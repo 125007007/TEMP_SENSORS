@@ -107,6 +107,7 @@ global rangeTime
 rangeTime = 100
 
 
+#-------------------------------------------------------CPU temp stuff-----------------------------------------------------------------------------
 
 def cpuTempLog():
 
@@ -124,7 +125,7 @@ def cpuTempLog():
 		conn.close()
 		time.sleep(300)
 
-def getHistDataCPU(numSamples):
+def last12HoursCPU():
 	conn = sqlite3.connect('../serverCPU.db', check_same_thread=False)
 	curs = conn.cursor()
 	#curs.execute("SELECT * FROM CPU_temps ORDER BY date ASC")
@@ -163,11 +164,67 @@ def getDayCPU(selectDate):
 	conn.close()
 	return temps, dates, times, timestamps
 
+#-----------------------------------------------------------end-------------------------------------------------------------------------------------
+
+
+
+def last12hours(database):
+	conn = sqlite3.connect(database, check_same_thread=False)
+	curs = conn.cursor()
+	curs.execute("SELECT * FROM CPU_temps WHERE timestamp >= datetime('now', '-1 hours')")
+	data = curs.fetchall()
+	names = []
+	temps = []
+	hums = []
+	timestamps = []
+
+	for row in reversed(data):
+		names.append(row[0])
+		temps.append(row[1])
+		hums.append(row[2])
+		timestamps.append(row[3])
+	conn.close()
+	return names, temps, hums, timestamps
+
+def lastReading(database):
+	conn = sqlite3.connect(database, check_same_thread=False)
+	curs = conn.cursor()
+	for row in curs.execute("SELECT * FROM DHT_data ORDER BY timestamp DESC LIMIT 1"):
+		name = str(row[0])
+		temp = row[1]
+		hum = row[2]
+		timestamp = str(row[3])
+
+	conn.close()
+	return name, temp, hum, timestamp
+
+def selectDay(database, selectDate):
+	conn = sqlite3.connect(database, check_same_thread=False)
+	curs = conn.cursor()
+	curs.execute("SELECT * FROM CPU_temps WHERE date = '{}'".format(selectDate))
+	data = curs.fetchall()
+	names = []
+	temps = []
+	hums = []
+	timestamps = []
+
+	for row in reversed(data):
+		names.append(row[0])
+		temps.append(row[1])
+		hums.append(row[2])
+		timestamps.append(row[3])
+
+	conn.close()
+	return names, temps, hums, timestamps
+
+
+
+
 #main route 
 @app.route("/", methods=['GET', 'POST'])
 def index():
 
-	temps, dates, times, timestamps = getHistDataCPU(numSamples)
+	temps, dates, times, timestamps = last12HoursCPU()
 
 	templateData = {'temp':temps,
 					'date':dates,
@@ -177,7 +234,6 @@ def index():
 
 	if request.method == 'POST':
 		selectedDate = request.form.get("Sdate")
-		print
 
 		temps, dates, times, timestamps = getDayCPU(str(selectedDate))
 
@@ -186,38 +242,43 @@ def index():
 						'time':times,
 						'timestamps':timestamps}
 
-		return render_template('fullDay.html', **templateData)
+		return render_template('fullDayCPU.html', **templateData)
 
 	return render_template('index.html', **templateData)
 
 @app.route("/sensor1")
 def sensor1():
-	name, temp, hum, date, time = getHistData(numSamples)
-	name_last, temp_last, hum_last, date_last, time_last, = getLastData()
-	templateData = {'name':name,
-					'temp':temp,
-					'hum':hum,
-					'date':date,
-					'time':time,
-					'name_last':name_last,
+	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1Data.db')
+	templateData = {'name_last':name_last,
 					'temp_last':temp_last,
 					'hum_last':hum_last,
-					'date_last':date_last,
-					'time_last':time_last}
+					'timestamp_last':timestamp_last}
 
 	return render_template('sensor1.html', **templateData)
 
-@app.route("/Fullday")
-def sensor1_dayTemp():
-	
-	temps, dates, times, timestamps = getDayCPU(str(datetime.today().strftime('%Y-%m-%d')))
-
-	templateData = {'temp':temps,
-					'date':dates,
-					'time':times,
+@app.route("/sensor1/temperature")
+def sensor1Temp():
+	names, temps, hums, timestamps = last12hours('../sensor1Data.db')
+	templateData = {'names':names,
+					'temps':temps,
+					'hums':hums,
 					'timestamps':timestamps}
 
-	return render_template('fullDay.html', **templateData)
+	
+	if request.method == 'POST':
+		selectedDate = request.form.get("Sdate")
+
+		names, temps, hums, timestamps = selectDay('../sensor1Data.db', str(selectedDate))
+
+		templateData = {'names':names,
+						'temps':temps,
+						'hums':hums,
+						'timestamps':timestamps}
+
+		return render_template('fullDayTemp.html', **templateData)
+
+	return render_template('sensor1Temp.html', **templateData)
+
 
 @app.route("/sensor2")
 def sensor2():
