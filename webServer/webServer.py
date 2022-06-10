@@ -171,7 +171,7 @@ def getDayCPU(selectDate):
 def last12hours(database):
 	conn = sqlite3.connect(database, check_same_thread=False)
 	curs = conn.cursor()
-	curs.execute("SELECT * FROM CPU_temps WHERE timestamp >= datetime('now', '-1 hours')")
+	curs.execute("SELECT * FROM DHT_data WHERE timestamp >= datetime('now', '-1 hours')")
 	data = curs.fetchall()
 	names = []
 	temps = []
@@ -201,7 +201,7 @@ def lastReading(database):
 def selectDay(database, selectDate):
 	conn = sqlite3.connect(database, check_same_thread=False)
 	curs = conn.cursor()
-	curs.execute("SELECT * FROM CPU_temps WHERE date = '{}'".format(selectDate))
+	curs.execute("SELECT * FROM DHT_data WHERE date = '{}'".format(selectDate))
 	data = curs.fetchall()
 	names = []
 	temps = []
@@ -246,6 +246,18 @@ def index():
 
 	return render_template('index.html', **templateData)
 
+@app.route("/ServerCPU/entireDay")
+def sensor1_dayTemp():
+	
+	temps, dates, times, timestamps = getDayCPU(str(datetime.today().strftime('%Y-%m-%d')))
+
+	templateData = {'temp':temps,
+					'date':dates,
+					'time':times,
+					'timestamps':timestamps}
+
+	return render_template('fullDayCPU.html', **templateData)
+
 @app.route("/sensor1")
 def sensor1():
 	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1Data.db')
@@ -256,13 +268,19 @@ def sensor1():
 
 	return render_template('sensor1.html', **templateData)
 
-@app.route("/sensor1/temperature")
+@app.route("/sensor1/temperature", methods=['GET', 'POST'])
 def sensor1Temp():
 	names, temps, hums, timestamps = last12hours('../sensor1Data.db')
+	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1Data.db')
+
 	templateData = {'names':names,
 					'temps':temps,
 					'hums':hums,
-					'timestamps':timestamps}
+					'timestamps':timestamps,
+					'name_last':name_last,
+					'temp_last':temp_last,
+					'hum_last':hum_last,
+					'timestamp_last':timestamp_last}
 
 	
 	if request.method == 'POST':
