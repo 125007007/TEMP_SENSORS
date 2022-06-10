@@ -17,7 +17,7 @@ def create_connection(db_file):
 
 if __name__ == '__main__':
     create_connection('serverCPU.db')
-    create_connection('sensor1Data.db')
-    create_connection('sensor2Data.db')
+    create_connection('sensor1.db')
+    create_connection('sensor2.db')
     time.sleep(0.5)
     os.system('python3 createTable.py')

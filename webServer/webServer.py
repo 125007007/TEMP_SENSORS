@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 # Retrieve LAST data from database
 def getLastData():
-	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
+	conn = sqlite3.connect('../sensor1.db', check_same_thread=False)
 	curs = conn.cursor()
 	for row in curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT 1"):
 		name = str(row[0])
@@ -35,7 +35,7 @@ def getLastData():
 
 # Get Max number of rows (table size)
 def maxRowsTable():
-	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
+	conn = sqlite3.connect('../sensor1.db', check_same_thread=False)
 	curs = conn.cursor()
 	for row in curs.execute("select COUNT(temp) from  DHT_data"):
 		maxNumberRows=row[0]
@@ -50,7 +50,7 @@ if (numSamples > 145):
 
 # Get 'x' samples of historical data
 def getHistData(numSamples):
-	conn = sqlite3.connect('../sensor1Data.db', check_same_thread=False)
+	conn = sqlite3.connect('../sensor1.db', check_same_thread=False)
 	curs = conn.cursor()
 	curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT "+str(numSamples))
 	data = curs.fetchall()
@@ -71,7 +71,7 @@ def getHistData(numSamples):
 
 # Retrieve LAST data from database
 def getLastData2():
-	conn = sqlite3.connect('../sensor2Data.db', check_same_thread=False)
+	conn = sqlite3.connect('../sensor2.db', check_same_thread=False)
 	curs = conn.cursor()
 	for row in curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT 1"):
 		name = str(row[0])
@@ -85,7 +85,7 @@ def getLastData2():
 
 # Get 'x' samples of historical data
 def getHistData2(numSamples):
-	conn = sqlite3.connect('../sensor2Data.db', check_same_thread=False)
+	conn = sqlite3.connect('../sensor2.db', check_same_thread=False)
 	curs = conn.cursor()
 	curs.execute("SELECT * FROM DHT_data ORDER BY date DESC LIMIT "+str(numSamples))
 	data = curs.fetchall()
@@ -260,7 +260,7 @@ def sensor1_dayTemp():
 
 @app.route("/sensor1")
 def sensor1():
-	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1Data.db')
+	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1.db')
 	templateData = {'name_last':name_last,
 					'temp_last':temp_last,
 					'hum_last':hum_last,
@@ -270,8 +270,8 @@ def sensor1():
 
 @app.route("/sensor1/temperature", methods=['GET', 'POST'])
 def sensor1Temp():
-	names, temps, hums, timestamps = last12hours('../sensor1Data.db')
-	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1Data.db')
+	names, temps, hums, timestamps = last12hours('../sensor1.db')
+	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1.db')
 
 	templateData = {'names':names,
 					'temps':temps,
@@ -286,7 +286,7 @@ def sensor1Temp():
 	if request.method == 'POST':
 		selectedDate = request.form.get("Sdate")
 
-		names, temps, hums, timestamps = selectDay('../sensor1Data.db', str(selectedDate))
+		names, temps, hums, timestamps = selectDay('../sensor1.db', str(selectedDate))
 
 		templateData = {'names':names,
 						'temps':temps,

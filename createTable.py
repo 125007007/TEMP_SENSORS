@@ -11,7 +11,7 @@ with con:
 print('Created Table 1')
 
 
-con = lite.connect('sensor1Data.db')
+con = lite.connect('sensor1.db')
 with con:
 	cur = con.cursor()
 	cur.execute("DROP TABLE IF EXISTS DHT_data")
@@ -19,7 +19,7 @@ with con:
 
 print('Created Table 2')
 
-con = lite.connect('sensor2Data.db')
+con = lite.connect('sensor2.db')
 with con:
 	cur = con.cursor()
 	cur.execute("DROP TABLE IF EXISTS DHT_data")

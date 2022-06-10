@@ -8,8 +8,8 @@ from py_bluetooth_utils.bluetooth_utils import (toggle_device, enable_le_scan, p
 # Use 0 for hci0
 dev_id = 0
 toggle_device(dev_id, True)
-sensor1_db = 'sensor1Data.db'
-sensor2_db = 'sensor2Data.db'
+sensor1_db = 'sensor1.db'
+sensor2_db = 'sensor2.db'
 sampleFreq = 150 # time in seconds ==> Sample every 10 min
 name = None
 temp = None

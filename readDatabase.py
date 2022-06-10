@@ -5,7 +5,7 @@ if len(sys.argv) < 2:
     print('Usage: readDatabase.py <database name>')
     sys.exit()
 
-if sys.argv[1] == 'sensor1Data.db' or sys.argv[1] == 'sensor2Data.db':
+if sys.argv[1] == 'sensor1.db' or sys.argv[1] == 'sensor2.db':
     conn = sqlite3.connect(sys.argv[1])
     curs = conn.cursor()
     print ("\nEntire database contents:\n")

@@ -1,6 +1,6 @@
 
 import sqlite3
-conn=sqlite3.connect('sensor1Data.db')
+conn=sqlite3.connect('sensor1.db')
 curs=conn.cursor()
 
 maxTemp = 27.6
