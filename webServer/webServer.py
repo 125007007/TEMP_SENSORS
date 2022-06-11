@@ -201,7 +201,7 @@ def lastReading(database):
 def selectDay(database, selectDate):
 	conn = sqlite3.connect(database, check_same_thread=False)
 	curs = conn.cursor()
-	curs.execute("SELECT * FROM DHT_data WHERE date = '{}'".format(selectDate))
+	curs.execute("SELECT * FROM DHT_data WHERE timestamp like '{}'".format(selectDate))
 	data = curs.fetchall()
 	names = []
 	temps = []
