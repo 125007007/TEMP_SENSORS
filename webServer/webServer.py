@@ -291,7 +291,8 @@ def sensor1Temp():
 		templateData = {'names':names,
 						'temps':temps,
 						'hums':hums,
-						'timestamps':timestamps}
+						'timestamps':timestamps,
+						'selectedDate':selectedDate}
 
 		return render_template('fullDayTemp.html', **templateData)
 

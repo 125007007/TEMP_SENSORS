@@ -8,55 +8,52 @@
 <div class="d-flex justify-content-center">
 	<h3 class="text-white">{{ name_last }} Sensor Data </h3>
 </div>
-
-  <div class="d-flex justify-content-around">
-    <div id="g1">
-		<p class="p-3 m-2 text-white">Temperature data from last 12 hours</p>
-		<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/temperature">Temperature</a>
-	</div>
-    <div id="g2">
-		<p class="p-3 m-2 text-white">Humidity data from last 12 hours</p>
-		<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/humidity">Humidity</a>
-	</div>
+	<div class="d-flex justify-content-around">
+		<div id="g1">
+		</div>
+		<div id="g2">
+		</div>
 </div>
 
-<div class="d-flex justify-content-center">
 
+<div class="d-flex justify-content-around">
+	<p class="p-3 m-2 text-white">Temperature data from last 12 hours</p>
+	<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/temperature">Temperature</a>
+
+	<p class="p-3 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</p>
+	<a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1">Refresh</a>
+
+	<p class="p-3 m-2 text-white">Humidity data from last 12 hours</p>
+	<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/humidity">Humidity</a>
 </div>
 
-	<div class="d-flex justify-content-center">
-		<p class="p-3 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</p>
-	</div>
-	<div class="d-flex justify-content-center">
-		<a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1">Refresh</a>
-	</div>
 
 
-    <script>
-		var g1, g2;
-		document.addEventListener("DOMContentLoaded", function(event) {
-			g1 = new JustGage({
-				id: "g1",
-				value: {{temp_last}},
-				valueFontColor: "white",
-				titleFontColor: "white",
-				min: -10,
-				max: 50,
-				title: "In Portacom TEMPERATURE",
-				label: "Celcius"
-			});
-
-			g2 = new JustGage({
-				id: "g2",
-				value: {{hum_last}},
-				valueFontColor: "white",
-				titleFontColor: "white",
-				min: 0,
-				max: 100,
-				title: "In Portacom HUMIDITY",
-				label: "%"
-			});
-
+<script>
+	var g1, g2;
+	document.addEventListener("DOMContentLoaded", function(event) {
+		g1 = new JustGage({
+			id: "g1",
+			value: {{temp_last}},
+			valueFontColor: "white",
+			titleFontColor: "white",
+			min: -10,
+			max: 50,
+			title: "In Portacom TEMPERATURE",
+			label: "Celcius"
 		});
-    </script>
+
+		g2 = new JustGage({
+			id: "g2",
+			value: {{hum_last}},
+			valueFontColor: "white",
+			titleFontColor: "white",
+			min: 0,
+			max: 100,
+			title: "In Portacom HUMIDITY",
+			label: "%"
+		});
+
+	});
+</script>
 {% endblock %}
