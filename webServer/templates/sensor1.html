@@ -11,9 +11,13 @@
 	<div class="d-flex justify-content-around">
 		<div id="g1">
 		</div>
-		<div class="d-flex justify-content-center">
-			<p class="p-3 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</p>
-			<a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1">Refresh</a>
+		<div class="d-flex justify-content-center align-content-center">
+			<div class="d-flex justify-content-center align-content-center">
+				<p class="p-3 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</p>
+			</div>
+			<div class="d-flex justify-content-center align-content-center">
+				<a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1">Refresh</a>
+			</div>
 		</div>
 		<div id="g2">
 		</div>
@@ -21,12 +25,16 @@
 
 
 <div class="d-flex justify-content-around">
-	<div class="d-flex justify-content-center">
+	<div class="d-flex justify-content-center align-content-center">
 		<p class="p-3 m-2 text-white">Temperature data from last 12 hours</p>
+	</div>
+	<div class="d-flex justify-content-center align-content-center">
 		<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/temperature">Temperature</a>
 	</div>
-	<div class="d-flex justify-content-center">
+	<div class="d-flex justify-content-center align-content-center">
 		<p class="p-3 m-2 text-white">Humidity data from last 12 hours</p>
+	</div>
+	<div class="d-flex justify-content-center align-content-center">
 		<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/humidity">Humidity</a>
 	</div>
 </div>
