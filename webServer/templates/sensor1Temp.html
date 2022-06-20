@@ -13,6 +13,12 @@
 
 <div class="d-flex justify-content-around">
 
+  <div class="d-flex flex-column align-items-center bd-highlight mb-3">
+    <h6 class="p-0.5 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</h6>
+    <h6 class="p-0.5 mb-2 text-white">Sensor data from last 12 hours</h6>
+    <a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1/temperature">Refresh</a>
+  </div>
+
   <form action="{{ url_for('sensor1Temp')}}" method="post" class="form-inline">
     <div class="row g-3 align-items-center">
       <div class="col-auto">
@@ -23,12 +29,6 @@
     </div>
     <button type="submit" class="btn btn-secondary active mt-2">Load</button>
   </form>
-
-  <div class="d-flex flex-column align-items-center bd-highlight mb-3">
-    <h6 class="p-3 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</h6>
-    <h6 class="p-3 mb-2 text-white">Sensor data from last 12 hours</h6>
-    <a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1/temperature">Refresh</a>
-  </div>
 
 </div>
 
