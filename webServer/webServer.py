@@ -271,16 +271,16 @@ def sensor1():
 @app.route("/sensor1/temperature", methods=['GET', 'POST'])
 def sensor1Temp():
 	names, temps, hums, timestamps = last12hours('../sensor1.db')
-	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1.db')
+	#name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1.db')
 
 	templateData = {'names':names,
 					'temps':temps,
 					'hums':hums,
 					'timestamps':timestamps,
-					'name_last':name_last,
-					'temp_last':temp_last,
-					'hum_last':hum_last,
-					'timestamp_last':timestamp_last}
+					'name_last':names[-1],
+					'temp_last':temps[-1],
+					'hum_last':hums[-1],
+					'timestamp_last':timestamps[-1]}
 
 	
 	if request.method == 'POST':
@@ -302,18 +302,18 @@ def sensor1Temp():
 
 @app.route("/sensor2")
 def sensor2():
-	name, temp, hum, date, time = getHistData2(numSamples)
-	name_last, temp_last, hum_last, date_last, time_last = getLastData2()
-	templateData = {'name':name,
-					'temp':temp,
-					'hum':hum,
-					'date':date,
-					'time':time,
-					'name_last':name_last,
-					'temp_last':temp_last,
-					'hum_last':hum_last,
-					'date_last':date_last,
-					'time_last':time_last}
+	names, temps, hums, dates, times = getHistData2(numSamples)
+	#name_last, temp_last, hum_last, date_last, time_last = getLastData2()
+	templateData = {'names':names,
+					'temps':temps,
+					'hums':hums,
+					'dates':dates,
+					'times':times,
+					'name_last':names[-1],
+					'temp_last':temps[-1],
+					'hum_last':hums[-1],
+					'date_last':dates[-1],
+					'time_last':times[-1]}
 
 	return render_template('sensor2.html', **templateData)
 
