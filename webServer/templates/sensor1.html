@@ -8,28 +8,28 @@
 <div class="d-flex justify-content-center">
 	<h3 class="text-white">{{ name_last }} Sensor Data </h3>
 </div>
-	<div class="d-flex justify-content-around">
 
-		<div class="d-flex flex-column align-items-center bd-highlight mb-3">
-			<div id="g1">
-			</div>
-			<p class="p-3 m-2 text-white">Temperature data from last 12 hours</p>
-			<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/temperature">Temperature</a>
+<div class="d-flex justify-content-around">
+
+	<div class="d-flex flex-column align-items-center bd-highlight mb-3">
+		<div id="g1">
 		</div>
-
-		<div class="d-flex flex-column align-items-center bd-highlight mb-3">
-			<h7 class="p-3 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</h7>
-			<a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1">Refresh</a>
-		</div>
-
-		<div class="d-flex flex-column align-items-center bd-highlight mb-3">
-			<div id="g2">
-			</div>
-			<p class="p-3 m-2 text-white">Humidity data from last 12 hours</p>
-			<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/humidity">Humidity</a>
-		</div>
-
+		<h6 class="p-3 m-2 text-white">Temperature data from last 12 hours</h6>
+		<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/temperature">Temperature</a>
 	</div>
+
+	<div class="d-flex flex-column align-items-center bd-highlight mb-3">
+		<h6 class="p-3 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</h6>
+		<a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1">Refresh</a>
+	</div>
+
+	<div class="d-flex flex-column align-items-center bd-highlight mb-3">
+		<div id="g2">
+		</div>
+		<h6 class="p-3 m-2 text-white">Humidity data from last 12 hours</h6>
+		<a class="btn btn-secondary btn-lg active m-3" role="button" href="/sensor1/humidity">Humidity</a>
+	</div>
+
 </div>
 
 
@@ -43,7 +43,7 @@
 			titleFontColor: "white",
 			min: -10,
 			max: 50,
-			title: "In Portacom TEMPERATURE", // should be flask var
+			title: "In Portacom TEMPERATURE",
 			label: "Celcius"
 		});
 
@@ -54,7 +54,7 @@
 			titleFontColor: "white",
 			min: 0,
 			max: 100,
-			title: "In Portacom HUMIDITY", // should be flask var
+			title: "In Portacom HUMIDITY",
 			label: "%"
 		});
 
