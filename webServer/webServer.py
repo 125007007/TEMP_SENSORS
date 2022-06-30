@@ -300,6 +300,43 @@ def sensor1Temp():
 	return render_template('sensor1Temp.html', **templateData)
 
 
+@app.route("/sensor1/humidity", methods=['GET', 'POST'])
+def sensor1Hum():
+	names, temps, hums, timestamps = last12hours('../sensor1.db')
+	#name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor1.db')
+
+	templateData = {'names':names,
+					'temps':temps,
+					'hums':hums,
+					'timestamps':timestamps,
+					'name_last':names[-1],
+					'temp_last':temps[-1],
+					'hum_last':hums[-1],
+					'timestamp_last':timestamps[-1]}
+
+	
+	if request.method == 'POST':
+		selectedDate = request.form.get("Sdate")
+
+		names, temps, hums, timestamps = selectDay('../sensor1.db', str(selectedDate))
+
+		templateData = {'names':names,
+						'temps':temps,
+						'hums':hums,
+						'timestamps':timestamps,
+						'selectedDate':selectedDate,
+						'name_last':names[-1]}
+
+		return render_template('fullDayHum.html', **templateData)
+
+	return render_template('sensor1Hum.html', **templateData)
+
+
+
+
+
+
+
 @app.route("/sensor2")
 def sensor2():
 	names, temps, hums, dates, times = getHistData2(numSamples)
@@ -312,7 +349,7 @@ def sensor2():
 					'name_last':names[-1],
 					'temp_last':temps[-1],
 					'hum_last':hums[-1],
-					'date_last':dates[-1],
+					'date _last':dates[-1],
 					'time_last':times[-1]}
 
 	return render_template('sensor2.html', **templateData)

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %} Temp & Humidity > Sensor 1 > Humidity > {{ selectedDate }}  {% endblock %}
+{{ super() }}
+{% block navItem1 %} <a class="nav-link active" aria-current="page" href="/sensor1">In Portacom</a> {% endblock %}
+{% block navItem2 %} <a class="nav-link" href="/sensor2">Under Portacom</a> {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+    <h3 class="text-white">{{ name_last }} Sensor Data </h3>
+</div>
+<div class="d-flex justify-content-center">
+    <h6 class="p-3 mb-2 text-white">Sensor data from: {{ selectedDate }}</h6>
+</div>
+<div class="d-flex justify-content-around">
+    <canvas id="HumChart" width="1800" height="750"></canvas>
+</div>
+
+<script>
+    // Global parameters:
+    // do not resize the chart canvas when its container does (keep at 600x400px)
+    Chart.defaults.global.responsive = false;
+
+    // define the chart data
+    var chartData = {
+    labels : [{% for item in timestamps %}
+                "{{item}}",
+                {% endfor %}],
+    datasets : [{
+        label: 'Humidity',
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data : [{% for item in hums %}
+                    {{item}},
+                {% endfor %}],
+        spanGaps: false
+    }]
+    }
+
+    // get chart canvas
+    var holder = document.getElementById("HumChart");
+    var ctx = document.getElementById("HumChart").getContext("2d");
+
+    // create the chart using the chart canvas
+    var tempChart = new Chart(ctx, {
+    type: 'line',
+    data: chartData,
+    options: {
+        tooltips: {
+        enabled: true,
+        mode: 'single',
+        callbacks: {
+            label: function(tooltipItems, data) {
+                    return tooltipItems.yLabel + ' percent';
+                    }
+        }
+        },
+    }
+    });
+
+</script>
+
+{% endblock %}
