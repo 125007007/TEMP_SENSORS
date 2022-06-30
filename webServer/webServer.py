@@ -178,7 +178,7 @@ def last12hours(database):
 	hums = []
 	timestamps = []
 
-	for row in reversed(data):
+	for row in data:
 		names.append(row[0])
 		temps.append(row[1])
 		hums.append(row[2])
@@ -208,7 +208,7 @@ def selectDay(database, selectDate):
 	hums = []
 	timestamps = []
 
-	for row in reversed(data):
+	for row in data:
 		names.append(row[0])
 		temps.append(row[1])
 		hums.append(row[2])
