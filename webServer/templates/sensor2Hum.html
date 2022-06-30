@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %} Temp & Humidity > Sensor 1 > Humidity{% endblock %}
+{% block title %} Temp & Humidity > Sensor 2 > Humidity{% endblock %}
 {{ super() }}
-{% block navItem1 %} <a class="nav-link active" aria-current="page" href="/sensor1">In Portacom</a> {% endblock %}
-{% block navItem2 %} <a class="nav-link" href="/sensor2">Under Portacom</a> {% endblock %}
+{% block navItem1 %} <a class="nav-link" aria-current="page" href="/sensor1">In Portacom</a> {% endblock %}
+{% block navItem2 %} <a class="nav-link active" href="/sensor2">Under Portacom</a> {% endblock %}
 
 {% block content %}
 
@@ -16,10 +16,10 @@
   <div class="d-flex flex-column align-items-center bd-highlight mb-3 p-2">
     <h6 class="p-0.5 mb-2 text-white">Last Reading: {{ timestamp_last }} (Updated every 1 minute)</h6>
     <h6 class="p-0.5 mb-2 text-white">Sensor data from last 12 hours</h6>
-    <a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor1/humidity">Refresh</a>
+    <a class="btn btn-secondary btn-lg active m-3" role="button"href="/sensor2/humidity">Refresh</a>
   </div>
 
-  <form action="{{ url_for('sensor1Hum')}}" method="post" class="form-inline">
+  <form action="{{ url_for('sensor2Hum')}}" method="post" class="form-inline">
     <div class="row g-3 align-items-center">
       <div class="col-auto">
         <label for="Sdate" class="col-form-label text-white">Enter Date</label>

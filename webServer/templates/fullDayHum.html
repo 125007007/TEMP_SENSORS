@@ -12,7 +12,7 @@
     <h6 class="p-3 mb-2 text-white">Sensor data from: {{ selectedDate }}</h6>
 </div>
 <div class="d-flex justify-content-around">
-    <canvas id="HumChart" width="1800" height="750"></canvas>
+    <canvas id="humChart" width="1800" height="750"></canvas>
 </div>
 
 <script>
@@ -52,8 +52,8 @@
     }
 
     // get chart canvas
-    var holder = document.getElementById("HumChart");
-    var ctx = document.getElementById("HumChart").getContext("2d");
+    var holder = document.getElementById("humChart");
+    var ctx = document.getElementById("humChart").getContext("2d");
 
     // create the chart using the chart canvas
     var tempChart = new Chart(ctx, {

@@ -334,25 +334,79 @@ def sensor1Hum():
 
 
 
-
-
-
 @app.route("/sensor2")
 def sensor2():
-	names, temps, hums, dates, times = getHistData2(numSamples)
-	#name_last, temp_last, hum_last, date_last, time_last = getLastData2()
+	name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor2.db')
+	templateData = {'name_last':name_last,
+					'temp_last':temp_last,
+					'hum_last':hum_last,
+					'timestamp_last':timestamp_last}
+
+	return render_template('sensor2.html', **templateData)
+
+@app.route("/sensor2/temperature", methods=['GET', 'POST'])
+def sensor2Temp():
+	names, temps, hums, timestamps = last12hours('../sensor2.db')
+	#name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor2.db')
+
 	templateData = {'names':names,
 					'temps':temps,
 					'hums':hums,
-					'dates':dates,
-					'times':times,
+					'timestamps':timestamps,
 					'name_last':names[-1],
 					'temp_last':temps[-1],
 					'hum_last':hums[-1],
-					'date _last':dates[-1],
-					'time_last':times[-1]}
+					'timestamp_last':timestamps[-1]}
 
-	return render_template('sensor2.html', **templateData)
+	
+	if request.method == 'POST':
+		selectedDate = request.form.get("Sdate")
+
+		names, temps, hums, timestamps = selectDay('../sensor2.db', str(selectedDate))
+
+		templateData = {'names':names,
+						'temps':temps,
+						'hums':hums,
+						'timestamps':timestamps,
+						'selectedDate':selectedDate,
+						'name_last':names[-1]}
+
+		return render_template('fullDayTemp.html', **templateData)
+
+	return render_template('sensor2Temp.html', **templateData)
+
+
+@app.route("/sensor2/humidity", methods=['GET', 'POST'])
+def sensor2Hum():
+	names, temps, hums, timestamps = last12hours('../sensor2.db')
+	#name_last, temp_last, hum_last, timestamp_last, = lastReading('../sensor2.db')
+
+	templateData = {'names':names,
+					'temps':temps,
+					'hums':hums,
+					'timestamps':timestamps,
+					'name_last':names[-1],
+					'temp_last':temps[-1],
+					'hum_last':hums[-1],
+					'timestamp_last':timestamps[-1]}
+
+	
+	if request.method == 'POST':
+		selectedDate = request.form.get("Sdate")
+
+		names, temps, hums, timestamps = selectDay('../sensor2.db', str(selectedDate))
+
+		templateData = {'names':names,
+						'temps':temps,
+						'hums':hums,
+						'timestamps':timestamps,
+						'selectedDate':selectedDate,
+						'name_last':names[-1]}
+
+		return render_template('fullDayHum.html', **templateData)
+
+	return render_template('sensor2Hum.html', **templateData)
+
 
 
 if __name__ == "__main__":
