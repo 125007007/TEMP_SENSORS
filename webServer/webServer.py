@@ -136,7 +136,7 @@ def last12HoursCPU():
 	times = []
 	timestamps = []
 
-	for row in reversed(data):
+	for row in data:
 		temps.append(row[0])
 		dates.append(row[1])
 		times.append(row[2])
@@ -155,7 +155,7 @@ def getDayCPU(selectDate):
 	times = []
 	timestamps = []
 
-	for row in reversed(data):
+	for row in data:
 		temps.append(row[0])
 		dates.append(row[1])
 		times.append(row[2])
