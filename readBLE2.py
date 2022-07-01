@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import sys, sqlite3
+import sys, sqlite3, time
 from datetime import datetime
 import bluetooth._bluetooth as bluez
  
-from bluetooth_utils import (toggle_device, enable_le_scan,
+from py_bluetooth_utils.bluetooth_utils import (toggle_device, enable_le_scan,
                              parse_le_advertising_events,
                              disable_le_scan, raw_packet_to_str)
  
@@ -12,6 +12,8 @@ dev_id = 0
 toggle_device(dev_id, True)
 sensor1_db = 'sensor1.db'
 sensor2_db = 'sensor2.db'
+sampleFreq = 75 # time in seconds ==> Sample every 10 min
+
  
 try:
     sock = bluez.hci_open_dev(dev_id)
@@ -34,6 +36,8 @@ try:
         curs.execute("INSERT INTO DHT_data values((?), (?), (?), (?))", (name, temp, hum, rounded_timestamp)) 
         conn.commit()
         conn.close()
+        time.sleep(sampleFreq)
+
 
     def le_advertise_packet_handler(mac, adv_type, data, rssi):
         data_str = raw_packet_to_str(data)
