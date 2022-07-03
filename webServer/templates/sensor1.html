@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block title %} Temp & Humidity - Sensor 1 {% endblock %}
 {{ super() }}
-{% block navItem1 %} <a class="nav-link active" aria-current="page" href="/sensor1">In Portacom</a> {% endblock %}
-{% block navItem2 %} <a class="nav-link" href="/sensor2">Under Portacom</a> {% endblock %}
+{% block navItem1 %} <a class="nav-link active" aria-current="page" href="/serverCPU">Server CPU <span class="bi bi-thermometer"></span></a> {% endblock %}
+{% block navItem2 %} <a class="nav-link" aria-current="page" href="/sensor1">In Portacom <span class="bi bi-thermometer"></span><span class="bi bi-snow2"></span></a> {% endblock %}
+{% block navItem3 %} <a class="nav-link" href="/sensor2">Under Portacom <span class="bi bi-thermometer"></span><span class="bi bi-snow2"></span></a> {% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-center">

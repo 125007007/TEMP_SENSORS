@@ -221,8 +221,14 @@ def selectDay(database, selectDate):
 
 
 #main route 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/")
 def index():
+
+	return render_template('index.html')
+
+#main route 
+@app.route("/", methods=['GET', 'POST'])
+def serverCPU():
 
 	temps, dates, times, timestamps = last12HoursCPU()
 
@@ -246,7 +252,7 @@ def index():
 
 	return render_template('index.html', **templateData)
 
-@app.route("/ServerCPU/entireDay")
+@app.route("/serverCPU/entireDay")
 def sensor1_dayTemp():
 	
 	temps, dates, times, timestamps = getDayCPU(str(datetime.today().strftime('%Y-%m-%d')))
