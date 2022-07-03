@@ -227,7 +227,7 @@ def index():
 	return render_template('index.html')
 
 #main route 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/serverCPU", methods=['GET', 'POST'])
 def serverCPU():
 
 	temps, dates, times, timestamps = last12HoursCPU()
@@ -250,7 +250,7 @@ def serverCPU():
 
 		return render_template('fullDayCPU.html', **templateData)
 
-	return render_template('index.html', **templateData)
+	return render_template('serverCPU.html', **templateData)
 
 @app.route("/serverCPU/entireDay")
 def sensor1_dayTemp():

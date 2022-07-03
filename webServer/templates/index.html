@@ -7,35 +7,43 @@
 
 {% block content %}
 
-<div class="d-flex">
-	<h5 class="text-white">Server CPU Information</h5>
-	<ul class="list-group">
-		<li class="list-group-item text-white">
-			Max Temp: 80c
-		</li>
-		<li class="list-group-item text-white">
-			Average Temp: 45-60c
-		</li>
-	</ul>
-	<p class="text-white">
-		This is the Raspberry Pi's CPU temperature. It may change more rapidly than the other sensors, due to increased load on the CPU.
-		That is normal, as long as it does not exceed the Max Temp everything is operating correctly. 
-	</p>
+<div class="d-flex justify-content-around">
+	<div class="card bg-dark text-white" style="width: 18rem;">
+		<div class="card-body">
+		<h5 class="card-title">Server CPU Information</h5>
+		<p class="card-text">Max Temp: 80c</p>
+		<p class="card-text">Average Temp: 45-60c</p>
+		<p class="card-text">
+			This is the Raspberry Pi's CPU temperature. It may change more rapidly than the other sensors, due to increased load on the CPU.
+			That is normal, as long as it does not exceed the Max Temp everything is operating correctly.
+		</p>
+		</div>
+
+	</div>
+
+
+	<div class="card bg-dark text-white" style="width: 18rem;">
+		<div class="card-body">
+		<h5 class="card-title">Temperature Information</h5>
+		<p class="card-text">
+			The temperature in the Portacom should not exceed ~24c otherwise the GPUs will get too hot(~70c).
+		</p>
+		</div>
+
+	</div>
+
+	<div class="card bg-dark text-white" style="width: 18rem;">
+		<div class="card-body">
+		<h5 class="card-title">Humidity Information</h5>
+		<p class="card-text">
+			At 100% relative humidity, the air is saturated and is at its dew point.
+			Iron will rust when the air climbs over 50% relative humidity.
+			Steel will rust when the relative humidity is over 80%.
+			As long as the temperature of the item you want to prevent getting condensation is over the abiant temperature, no condensation will form.
+		</p>
+		</div>
+
+	</div>
 </div>
 
-<div class="d-flex">
-	<h5 class="text-white">Temperature Information</h5>
-	<p class="text-white">
-		The temperature in the Portacom should not exceed ~24c otherwise the GPUs will get too hot(~70c).
-	</p>
-</div>
-<div class="d-flex"></div>
-	<h5 class="text-white">Humidity Information</h5>
-	<p class="text-white">
-		At 100% relative humidity, the air is saturated and is at its dew point.
-		Iron will rust when the air climbs over 50% relative humidity.
-		Steel will rust when the relative humidity is over 80%.
-		As long as the temperature of the item you want to prevent getting condensation is over the abiant temperature, no condensation will form.
-	</p>
-</div>
 {% endblock %}
