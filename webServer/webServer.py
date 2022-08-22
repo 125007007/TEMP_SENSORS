@@ -10,8 +10,15 @@
 	RPi WEb Server for DHT captured data with Gage and Graph plot  
 '''
 
+from platform import platform
+
+# set to false to not use the pi CPU temp logging
+rpi = False
+
+if rpi is True:
+	from gpiozero import CPUTemperature
+
 from datetime import datetime
-from gpiozero import CPUTemperature
 import sqlite3, time, threading
 from flask import Flask, render_template, send_file, make_response, request, Response
 
@@ -138,7 +145,7 @@ def index():
 
 	return render_template('index.html')
 
-#main route 
+# server cpu temp route 
 @app.route("/serverCPU", methods=['GET', 'POST'])
 def serverCPU():
 

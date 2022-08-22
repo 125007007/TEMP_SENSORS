@@ -1,0 +1,12 @@
+webServer.py
+
+    add option to turn off server cpu temp logging
+
+general
+    update readme
+    update install stuff / fix Python 3.10 bug
+
+
+***Important***
+
+change database so that all the data from different sensors is in one (seperated by tables instead of different databases)

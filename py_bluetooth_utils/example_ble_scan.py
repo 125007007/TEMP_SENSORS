@@ -34,11 +34,10 @@ try:
                 print(' ' * 35 + 'data_diff=')
                 for c1, c2 in zip(data_str, prev_data[1]):
                     if c1 != c2:
-			
                         pass
 			#print('\033[0;33m' + c1 + '\033[m')
                     else:
-			pass
+                        pass
                         #print(c1)
                 print('\n')
 
