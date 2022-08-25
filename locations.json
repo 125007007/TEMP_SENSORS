@@ -1,10 +1,21 @@
 {
 
     "macs": {
-
-        "A4:C1:38:D0:5D:31":"Backyard Portacom",
+        "A4:C1:38:19:B4:32":"In Portacom",
+        "A4:C1:38:A4:8C:2C":"Under Portacom",
+        "A4:C1:38:41:6E:78":"Kitchen",
         "A4:C1:38:7B:9C:4E":"Bathroom",
-        "A4:C1:38:41:6E:78":"Kitchen"
+        "A4:C1:38:D0:5D:31":"Backyard Portacom"
+        
+    },
+
+    "names": {
+        "A4:C1:38:19:B4:32":"sensor1",
+        "A4:C1:38:A4:8C:2C":"sensor2",
+        "A4:C1:38:41:6E:78":"sensor3",
+        "A4:C1:38:7B:9C:4E":"sensor4",
+        "A4:C1:38:D0:5D:31":"sensor5"
+        
     }
 
 }

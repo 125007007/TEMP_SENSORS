@@ -13,8 +13,12 @@ print("\nmacs:", data['macs'])
 print(data['macs'])
 
 macs = data['macs']
+names = data['names']
 print(macs)
 
 
 for key, value in macs.items():
     print('Key:', key, 'Value:', value)
+
+for key, value in names.items():
+    print('Key', key, 'Value', value)
